@@ -1,14 +1,19 @@
 body {
     text-align: center;
     font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+}
+
+h1 {
+    margin-top: 20px;
 }
 
 .game-board {
     display: grid;
     grid-template-columns: repeat(4, 100px);
-    gap: 10px;
+    gap: 12px;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
 .card {
@@ -16,13 +21,25 @@ body {
     height: 100px;
     background: #3498db;
     color: white;
-    font-size: 28px;
+    font-size: 30px;
+    font-weight: bold;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    border-radius: 8px;
+    transition: transform 0.2s, background 0.2s;
+}
+
+.card:hover {
+    transform: scale(1.05);
 }
 
 .flipped {
     background: #2ecc71;
+}
+
+.matched {
+    background: #27ae60;
+    pointer-events: none;
 }
