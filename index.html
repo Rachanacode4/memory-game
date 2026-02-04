@@ -5,10 +5,29 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+<div id="menu">
     <h1>Greek Alphabet Memory Game</h1>
+
+    <h3>Select Mode</h3>
+    <button onclick="setPlayers(1)">Solo Player</button>
+    <button onclick="setPlayers(2)">Two Players</button>
+
+    <h3>Select Difficulty</h3>
+    <button onclick="setLevel('easy')">Easy</button>
+    <button onclick="setLevel('medium')">Medium</button>
+    <button onclick="setLevel('hard')">Hard</button>
+
+    <br><br>
+    <button onclick="startGame()">Start Game</button>
+</div>
+
+<div id="game" style="display:none;">
+    <h2 id="turnText"></h2>
     <h2>Score: <span id="score">100</span></h2>
     <div class="game-board" id="board"></div>
+</div>
 
-    <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
