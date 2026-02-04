@@ -1,8 +1,10 @@
 const greekLetters = ['Α','Β','Γ','Δ','Ε','Ζ','Η','Θ'];
 let cards = [...greekLetters, ...greekLetters];
+
 let score = 100;
 let flippedCards = [];
-let matched = 0;
+let matchedPairs = 0;
+let lockBoard = false;
 
 cards.sort(() => 0.5 - Math.random());
 
@@ -19,14 +21,15 @@ cards.forEach(letter => {
 });
 
 function flipCard() {
-    if (flippedCards.length < 2 && !this.classList.contains('flipped')) {
-        this.innerText = this.dataset.letter;
-        this.classList.add('flipped');
-        flippedCards.push(this);
+    if (lockBoard || this.classList.contains('matched') || flippedCards.includes(this)) return;
 
-        if (flippedCards.length === 2) {
-            checkMatch();
-        }
+    this.innerText = this.dataset.letter;
+    this.classList.add('flipped');
+    flippedCards.push(this);
+
+    if (flippedCards.length === 2) {
+        lockBoard = true;
+        checkMatch();
     }
 }
 
@@ -34,10 +37,13 @@ function checkMatch() {
     const [card1, card2] = flippedCards;
 
     if (card1.dataset.letter === card2.dataset.letter) {
-        matched += 1;
-        flippedCards = [];
-        if (matched === greekLetters.length) {
-            alert("You won!");
+        card1.classList.add('matched');
+        card2.classList.add('matched');
+        matchedPairs++;
+        resetTurn();
+
+        if (matchedPairs === greekLetters.length) {
+            setTimeout(() => alert("You won the game!"), 300);
         }
     } else {
         score -= 4;
@@ -48,11 +54,16 @@ function checkMatch() {
             card2.innerText = "";
             card1.classList.remove('flipped');
             card2.classList.remove('flipped');
-            flippedCards = [];
+            resetTurn();
         }, 800);
 
         if (score <= 0) {
-            alert("Game Over!");
+            setTimeout(() => alert("Game Over!"), 300);
         }
     }
+}
+
+function resetTurn() {
+    flippedCards = [];
+    lockBoard = false;
 }
